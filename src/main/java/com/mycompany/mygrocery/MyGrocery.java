@@ -6,11 +6,27 @@ package com.mycompany.mygrocery;
 
 /**
  *
- * @author Ayat
+ * Ayat Abdulaziz Gaber Al-Khulaqi (ID: 1191202335)
  */
-public class MyGrocery {
+import javax.swing.*;
 
+public class MyGrocery {
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                createAndShowGUI();
+            }
+        });
+    }
+
+    private static void createAndShowGUI() {
+        JFrame frame = new JFrame("MyGrocery");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        MainPanel mainPanel = new MainPanel();
+        frame.getContentPane().add(mainPanel);
+
+        frame.pack();
+        frame.setVisible(true);
     }
 }
