@@ -10,11 +10,11 @@ package com.mycompany.mygrocery;
  */
 public class CannedFood extends FoodDrink {
     
-    public static final CannedFood PEAS = new CannedFood("Peas", 25.99, 10);
-    public static final CannedFood REDBEANS = new CannedFood("Red Beans", 6.90, 11);
-    public static final CannedFood WHIHTEBEANS = new CannedFood("White Beans", 8.80, 12);
+    public static final CannedFood PEAS = new CannedFood("Peas", 5.99);
+    public static final CannedFood REDBEANS = new CannedFood("Red Beans", 6.90);
+    public static final CannedFood WHIHTEBEANS = new CannedFood("White Beans", 8.80);
 
-    public CannedFood(String name, double price, int id) {
-        super(name, price, id);
+    public CannedFood(String name, double price) {
+        super(name, price);
     }
 }

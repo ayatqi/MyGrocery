@@ -10,11 +10,11 @@ package com.mycompany.mygrocery;
  */
 
 public class Meats extends FoodDrink {
-    public static final Meats CHICKEN = new Meats("Chicken", 35.99, 1);
-    public static final Meats LAMB = new Meats("Lamb", 37.99, 2);
-    public static final Meats BEEF = new Meats("Beef", 36.99, 3);
+    public static final Meats CHICKEN = new Meats("Chicken", 35.99);
+    public static final Meats LAMB = new Meats("Lamb", 37.99);
+    public static final Meats BEEF = new Meats("Beef", 36.99);
 
-    public Meats(String name, double price, int id) {
-        super(name, price, id);
+    public Meats(String name, double price) {
+        super(name, price);
     }
 }

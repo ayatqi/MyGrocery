@@ -9,21 +9,34 @@ package com.mycompany.mygrocery;
  *
  * @author Ayat
  */
+
+import javax.swing.*;
+import java.awt.*;
+
+
 import javax.swing.*;
 import java.awt.*;
 
 public class MainPanel extends JPanel {
+    private Receipt receipt;
+    private FoodPanel foodPanel;
+
     public MainPanel() {
         setLayout(new GridLayout(1, 2));
 
-        // Food Panel
-        FoodDrink foodDrinkPanel = new FoodDrink();
-        add(foodDrinkPanel);
+        JPanel receiptDiscount = new JPanel(new BorderLayout());
 
-        
-        // Receipt Panel
-        
-     
+        receipt = new Receipt();
+        receiptDiscount.add(receipt, BorderLayout.CENTER);
+
+        // Create and add the discount panel to the top of the receiptDiscount panel
+        DiscountPanel discount = new DiscountPanel();
+        receiptDiscount.add(discount, BorderLayout.NORTH);
+
+        foodPanel = new FoodPanel(receipt);
+
+        add(foodPanel);
+        add(receiptDiscount);
     }
-}
 
+}
