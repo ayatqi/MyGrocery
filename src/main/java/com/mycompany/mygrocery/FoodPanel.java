@@ -14,41 +14,37 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class FoodPanel extends JPanel {
-
     private Receipt receipt;
 
-    
     public FoodPanel(Receipt receipt) {
         this.receipt = receipt;
-        setLayout(new GridLayout(2, 2)); // Set the layout to a 2x2 grid
+        setLayout(new GridLayout(2, 2));
 
         JPanel meatPanel = createCategoryPanel("Meats", new Color(249, 235, 234));
-        addMeatItem(meatPanel, Meats.CHICKEN);
-        addMeatItem(meatPanel, Meats.LAMB);
-        addMeatItem(meatPanel, Meats.BEEF);
+        MeatItem(meatPanel, Meats.CHICKEN);
+        MeatItem(meatPanel, Meats.LAMB);
+        MeatItem(meatPanel, Meats.BEEF);
         addCategoryPanel(meatPanel);
 
         JPanel fruitPanel = createCategoryPanel("Fruits", new Color(254, 245, 231));
-        addFruitItem(fruitPanel, Fruits.STRAWBERRY);
-        addFruitItem(fruitPanel, Fruits.APPLE);
-        addFruitItem(fruitPanel, Fruits.ORANGE);
+        FruitItem(fruitPanel, Fruits.STRAWBERRY);
+        FruitItem(fruitPanel, Fruits.APPLE);
+        FruitItem(fruitPanel, Fruits.ORANGE);
         addCategoryPanel(fruitPanel);
 
         JPanel drinkPanel = createCategoryPanel("Drinks", new Color(235, 245, 251));
-        addDrinkItem(drinkPanel, Drinks.MILK);
-        addDrinkItem(drinkPanel, Drinks.WATER);
-        addDrinkItem(drinkPanel, Drinks.COLA);
+        DrinkItem(drinkPanel, Drinks.MILK);
+        DrinkItem(drinkPanel, Drinks.WATER);
+        DrinkItem(drinkPanel, Drinks.COLA);
         addCategoryPanel(drinkPanel);
 
         JPanel cannedPanel = createCategoryPanel("Canned Food", new Color(248, 249, 249));
-        addCannedFoodItem(cannedPanel, CannedFood.PEAS);
-        addCannedFoodItem(cannedPanel, CannedFood.REDBEANS);
-        addCannedFoodItem(cannedPanel, CannedFood.WHIHTEBEANS);
+        CannedFoodItem(cannedPanel, CannedFood.PEAS);
+        CannedFoodItem(cannedPanel, CannedFood.REDBEANS);
+        CannedFoodItem(cannedPanel, CannedFood.WHIHTEBEANS);
         addCategoryPanel(cannedPanel);
-                
-        
     }
-    
+
     private JPanel createCategoryPanel(String category, Color color) {
         JPanel panel = new JPanel();
         panel.setBackground(color);
@@ -69,8 +65,8 @@ public class FoodPanel extends JPanel {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         return panel;
     }
-    
-    private void addMeatItem(JPanel panel, Meats meat) {
+
+    private void MeatItem(JPanel panel, Meats meat) {
         JPanel itemPanel = createItemPanel(panel.getBackground());
         JLabel nameLabel = new JLabel(meat.getName());
         JLabel priceLabel = new JLabel("Price: RM" + meat.getPrice());
@@ -84,12 +80,23 @@ public class FoodPanel extends JPanel {
                 receipt.addItem(meat);
             }
         });
+
+        JButton removeButton = new JButton("-");
+        removeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                receipt.removeItem(meat);
+            }
+        });
+
+        itemPanel.setLayout(new FlowLayout());
         itemPanel.add(addButton);
+        itemPanel.add(removeButton);
 
         panel.add(itemPanel);
     }
-     
-     private void addFruitItem(JPanel panel, Fruits fruits) {
+
+    private void FruitItem(JPanel panel, Fruits fruits) {
         JPanel itemPanel = createItemPanel(panel.getBackground());
         JLabel nameLabel = new JLabel(fruits.getName());
         JLabel priceLabel = new JLabel("Price: RM" + fruits.getPrice());
@@ -103,13 +110,24 @@ public class FoodPanel extends JPanel {
                 receipt.addItem(fruits);
             }
         });
+        
+        JButton removeButton = new JButton("-");
+        removeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                receipt.removeItem(fruits);
+            }
+        });
+
+        itemPanel.setLayout(new FlowLayout());
         itemPanel.add(addButton);
+        itemPanel.add(removeButton);
 
         panel.add(itemPanel);
     }
-    
-    private void addDrinkItem(JPanel panel, Drinks drinks) {
-       JPanel itemPanel = createItemPanel(panel.getBackground());
+
+    private void DrinkItem(JPanel panel, Drinks drinks) {
+        JPanel itemPanel = createItemPanel(panel.getBackground());
         JLabel nameLabel = new JLabel(drinks.getName());
         JLabel priceLabel = new JLabel("Price: RM" + drinks.getPrice());
         itemPanel.add(nameLabel);
@@ -122,13 +140,24 @@ public class FoodPanel extends JPanel {
                 receipt.addItem(drinks);
             }
         });
+        
+        JButton removeButton = new JButton("-");
+        removeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                receipt.removeItem(drinks);
+            }
+        });
+
+        itemPanel.setLayout(new FlowLayout());
         itemPanel.add(addButton);
+        itemPanel.add(removeButton);
 
         panel.add(itemPanel);
     }
-    
-    private void addCannedFoodItem(JPanel panel, CannedFood cannedFood) {
-       JPanel itemPanel = createItemPanel(panel.getBackground());
+
+    private void CannedFoodItem(JPanel panel, CannedFood cannedFood) {
+        JPanel itemPanel = createItemPanel(panel.getBackground());
         JLabel nameLabel = new JLabel(cannedFood.getName());
         JLabel priceLabel = new JLabel("Price: RM" + cannedFood.getPrice());
         itemPanel.add(nameLabel);
@@ -141,9 +170,19 @@ public class FoodPanel extends JPanel {
                 receipt.addItem(cannedFood);
             }
         });
+        
+        JButton removeButton = new JButton("-");
+        removeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                receipt.removeItem(cannedFood);
+            }
+        });
+
+        itemPanel.setLayout(new FlowLayout());
         itemPanel.add(addButton);
+        itemPanel.add(removeButton);
 
         panel.add(itemPanel);
     }
-
 }

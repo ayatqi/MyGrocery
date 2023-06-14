@@ -8,83 +8,104 @@ package com.mycompany.mygrocery;
  *
  * Ayat Abdulaziz Gaber Al-Khulaqi (ID: 1191202335)
  */
-import java.util.ArrayList;
-import java.util.List;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Receipt extends JPanel {
     private DefaultListModel<String> receiptModel;
     private JList<String> receiptList;
     private JScrollPane scrollPane;
     private JLabel totalLabel;
+    private JLabel discountTotalLabel;
+    private JLabel afterDiscountTotalLabel;
+    private boolean discountApplied;
+    private double discountPercentage;
+    private List<FoodDrink> items;
 
     public Receipt() {
         receiptModel = new DefaultListModel<>();
         receiptList = new JList<>(receiptModel);
         scrollPane = new JScrollPane(receiptList);
-        totalLabel = new JLabel("Total: RM0.00"); // Label to display the total price
+        totalLabel = new JLabel("Total: RM0.00");
+        discountTotalLabel = new JLabel("Discount Total: RM0.00");
+        afterDiscountTotalLabel = new JLabel("After Discount Total: RM0.00");
+        discountApplied = false;
+        discountPercentage = 0;
+        items = new ArrayList<>();
 
         setLayout(new BorderLayout());
         add(scrollPane, BorderLayout.CENTER);
-        add(totalLabel, BorderLayout.SOUTH);
+        JPanel totalPanel = new JPanel();
+        totalPanel.setLayout(new GridLayout(3, 1));
+        totalPanel.add(totalLabel);
+        totalPanel.add(discountTotalLabel);
+        totalPanel.add(afterDiscountTotalLabel);
+        add(totalPanel, BorderLayout.SOUTH);
     }
 
     public void addItem(FoodDrink item) {
         String itemString = item.getName() + " - RM" + item.getPrice();
         receiptModel.addElement(itemString);
-        updateTotal();
+        items.add(item);
+        updateTotals();
     }
 
     public void removeItem(FoodDrink item) {
         String itemString = item.getName() + " - RM" + item.getPrice();
         receiptModel.removeElement(itemString);
-        updateTotal();
+        items.remove(item);
+        updateTotals();
     }
 
-    private void updateTotal() {
+    public DefaultListModel<String> getReceiptModel() {
+        return receiptModel;
+    }
+
+    private void updateTotals() {
+        double total = calculateTotal();
+        double discountTotal = calculateDiscountTotal(total);
+        double afterDiscountTotal = total - discountTotal;
+
+        totalLabel.setText("Total: RM" + String.format("%.2f", total));
+        discountTotalLabel.setText("Discount Total: RM" + String.format("%.2f", discountTotal));
+        afterDiscountTotalLabel.setText("After Discount Total: RM" + String.format("%.2f", afterDiscountTotal));
+    }
+
+    private double calculateTotal() {
         double total = 0;
-        for (int i = 0; i < receiptModel.size(); i++) {
-            String itemString = receiptModel.elementAt(i);
-            String[] parts = itemString.split(" - RM");
-            double itemPrice = Double.parseDouble(parts[1]);
-            total += itemPrice;
+        for (FoodDrink item : items) {
+            total += item.getPrice();
         }
-        totalLabel.setText("Total: RM" + String.format("%.2f", total)); // Update the total price label
+        return total;
     }
 
-    public List<FoodDrink> getItems() {
-        List<FoodDrink> itemList = new ArrayList<>();
-        for (int i = 0; i < receiptModel.size(); i++) {
-            String itemString = receiptModel.elementAt(i);
-            String[] parts = itemString.split(" - RM");
-            String itemName = parts[0];
-            double itemPrice = Double.parseDouble(parts[1]);
-            itemList.add(new FoodDrink(itemName, itemPrice));
+    private double calculateDiscountTotal(double total) {
+        if (discountApplied) {
+            return total * (discountPercentage / 100);
         }
-        return itemList;
+        return 0;
     }
 
-    public void createRemoveItemButton(FoodDrink item) {
-        JButton removeButton = new JButton("-");
-        removeButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                removeItem(item);
-            }
-        });
+    public void applyDiscount(double percentage) {
+        if (!discountApplied) {
+            discountApplied = true;
+            discountPercentage = percentage;
+            updateTotals();
+            JOptionPane.showMessageDialog(null, "Discount applied: " + percentage + "%");
+        } else {
+            JOptionPane.showMessageDialog(null, "Discount has already been applied.");
+        }
+    }
 
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        buttonPanel.add(removeButton);
-
-        // Create a new panel to hold the item name and the delete button
-        JPanel itemPanel = new JPanel(new BorderLayout());
-        itemPanel.add(new JLabel(item.getName()), BorderLayout.CENTER);
-        itemPanel.add(buttonPanel, BorderLayout.EAST);
-
-        receiptList.add(itemPanel); // Add the item panel to the JList
-        updateTotal();
+    public void noDiscount() {
+        if (discountApplied) {
+            discountApplied = false;
+            discountPercentage = 0;
+            updateTotals();
+            JOptionPane.showMessageDialog(null, "Discount removed.");
+        }
     }
 }

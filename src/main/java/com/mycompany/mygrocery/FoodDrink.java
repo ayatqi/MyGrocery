@@ -12,7 +12,6 @@ package com.mycompany.mygrocery;
 public class FoodDrink{
 
     private String name;
-    private int id;
     private double price; 
     
     
