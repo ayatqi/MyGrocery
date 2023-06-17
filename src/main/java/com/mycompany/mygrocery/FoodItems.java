@@ -6,13 +6,17 @@ package com.mycompany.mygrocery;
 
 /**
  *
- * Ayat Abdulaziz Gaber Al-Khulaqi (ID: 1191202335)
+ *  Ayat Abdulaziz Gaber Al-Khulaqi (ID: 1191202335) 
  */
 
-public interface  FoodItems{
+// declares a new interface called FoodItems
+public interface  FoodItems{ 
 
-    public String getName();
+    // declares a method called getName that returns a String
+    public String getName(); 
 
-    public double getPrice();
+    
+    // declares a method called getPrice that returns a double
+    public double getPrice(); 
 
 }
