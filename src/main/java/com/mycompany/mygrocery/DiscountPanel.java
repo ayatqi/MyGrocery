@@ -40,6 +40,9 @@ public class DiscountPanel extends JPanel {
         cardNumberPanel.add(cardNumberLabel);
         cardNumberPanel.add(cardNumberField);
         cardNumberPanel.add(submitButton);
+       
+        
+        
         add(cardNumberPanel);
 
         // Second Row: Discount Vouchers
@@ -56,7 +59,7 @@ public class DiscountPanel extends JPanel {
                 if (chickenAndCokeIncluded) {
                     applyDiscountVoucher(selectedVoucher);
                 } else {
-                    JOptionPane.showMessageDialog(null, "The voucher is not applicable as Chicken and Cola are not included in the receipt.");
+                    JOptionPane.showMessageDialog(null, "The voucher is not applicable as Chicken and coke are not included in the receipt.");
                 }
             }
         });
@@ -70,11 +73,24 @@ public class DiscountPanel extends JPanel {
                 discountApplied = false; 
             }
         });
+        
+        JButton resetButton = new JButton("Reset");
+        
+        resetButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                resetDiscount();
+                
+                
+            }
+        });
+
 
         JPanel discountPanel = new JPanel();
         discountPanel.add(discountLabel);
         discountPanel.add(discountButton);
         discountPanel.add(clearButton);
+        discountPanel.add(resetButton);
         add(discountPanel);
 
         // Submit button action listener
@@ -111,7 +127,7 @@ public class DiscountPanel extends JPanel {
             String itemString = receiptModel.getElementAt(i);
             if (itemString.contains("Chicken")) {
                 chickenIncluded = true;
-            } else if (itemString.contains("Cola")) {
+            } else if (itemString.contains("Coke")) {
                 cokeIncluded = true;
             }
 
@@ -135,8 +151,14 @@ public class DiscountPanel extends JPanel {
         }
     }
 
-    private void clearVouchers() {
+    public void clearVouchers() {
         discountApplied = false;
         JOptionPane.showMessageDialog(null, "Vouchers cleared.");
+    }
+
+    public void resetDiscount() {
+        receipt.resetReceipt(); // Reset the receipt
+        discountApplied = false;
+        JOptionPane.showMessageDialog(null, "Reset Receipt.");
     }
 }

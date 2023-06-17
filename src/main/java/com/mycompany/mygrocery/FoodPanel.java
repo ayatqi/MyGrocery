@@ -35,7 +35,7 @@ public class FoodPanel extends JPanel {
         JPanel drinkPanel = createCategoryPanel("Drinks", new Color(235, 245, 251));
         DrinkItem(drinkPanel, Drinks.MILK);
         DrinkItem(drinkPanel, Drinks.WATER);
-        DrinkItem(drinkPanel, Drinks.COLA);
+        DrinkItem(drinkPanel, Drinks.COKE);
         addCategoryPanel(drinkPanel);
 
         JPanel cannedPanel = createCategoryPanel("Canned Food", new Color(248, 249, 249));

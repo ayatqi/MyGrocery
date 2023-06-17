@@ -23,7 +23,7 @@ public class Receipt extends JPanel {
     private JLabel afterDiscountTotalLabel;
     private boolean discountApplied;
     private double discountPercentage;
-    private List<FoodDrink> items;
+    private List<FoodItems> items;
 
     public Receipt() {
         receiptModel = new DefaultListModel<>();
@@ -43,17 +43,19 @@ public class Receipt extends JPanel {
         totalPanel.add(totalLabel);
         totalPanel.add(discountTotalLabel);
         totalPanel.add(afterDiscountTotalLabel);
+        
+        
         add(totalPanel, BorderLayout.SOUTH);
     }
 
-    public void addItem(FoodDrink item) {
+    public void addItem(FoodItems item) {
         String itemString = item.getName() + " - RM" + item.getPrice();
         receiptModel.addElement(itemString);
         items.add(item);
         updateTotals();
     }
 
-    public void removeItem(FoodDrink item) {
+    public void removeItem(FoodItems item) {
         String itemString = item.getName() + " - RM" + item.getPrice();
         receiptModel.removeElement(itemString);
         items.remove(item);
@@ -76,7 +78,7 @@ public class Receipt extends JPanel {
 
     private double calculateTotal() {
         double total = 0;
-        for (FoodDrink item : items) {
+        for (FoodItems item : items) {
             total += item.getPrice();
         }
         return total;
@@ -105,7 +107,17 @@ public class Receipt extends JPanel {
             discountApplied = false;
             discountPercentage = 0;
             updateTotals();
-            JOptionPane.showMessageDialog(null, "Discount removed.");
+            JOptionPane.showMessageDialog(null, "Voucher removed.");
         }
     }
+
+    public void resetReceipt() {
+    receiptModel.clear();
+    items.clear();
+    updateTotals();
+    discountApplied = false;
+    discountPercentage = 0;
+    }
+
+
 }

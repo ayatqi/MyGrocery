@@ -11,7 +11,7 @@ package com.mycompany.mygrocery;
 import javax.swing.*;
 import java.awt.*;
 
-public class GroceryPanel {
+public class GroceryPanel extends JFrame{
     private Receipt receipt;
     private DiscountPanel discount;
     private FoodPanel foodPanel;
@@ -23,8 +23,8 @@ public class GroceryPanel {
     }
 
     public void showGUI() {
-        JFrame frame = new JFrame("MyGrocery");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setTitle("MyGrocery");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JPanel receiptDiscount = new JPanel(new BorderLayout());
         receiptDiscount.add(receipt, BorderLayout.CENTER);
@@ -35,8 +35,9 @@ public class GroceryPanel {
         mainPanel.add(foodPanel);
         mainPanel.add(receiptDiscount);
 
-        frame.getContentPane().add(mainPanel);
-        frame.pack();
-        frame.setVisible(true);
+        getContentPane().add(mainPanel);
+        pack();
+        setVisible(true);
+      
     }
 }
